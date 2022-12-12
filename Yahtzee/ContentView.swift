@@ -66,6 +66,8 @@ struct ContentView: View {
                 HStack{
                     NavigationLink("Help", destination: InstructionsView())
                     .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                    NavigationLink("Scores", destination: ScoreView())
+                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                 }
             }
         }
