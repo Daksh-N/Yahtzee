@@ -28,22 +28,36 @@ struct ContentView: View {
                             .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
                             .padding()
                         .onTapGesture {
-                            chooseRandom(times: 3, i: i)
-                            withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
-                            rotationValues[i] += 360
-                            }
+                            //contains code that will go in rollTheDice()
+                            //chooseRandom(times: 3, i: i)
+                            //withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                            //rotationValues[i] += 360
+                            //}
                         }
                         
                         Button(holdValues[i]) {
-                            // do stuff
+                            if(holdValues[i] == "Hold")
+                            {
+                                holdValues[i] = "'Held'"
+                            }
+                            else if holdValues[i] == "'Held'"
+                            {
+                                holdValues[i] = "Hold"
+                            }
                         }
-                        .buttonStyle(CustomButtonStyle())
+                        .buttonStyle(CustomButtonStyle(holdValue: holdValues[i]))
                     }
                 }
-                Button("Roll") {
-                    rollTheDice()
+                HStack{
+                    Button("Roll") {
+                        rollTheDice()
+                    }
+                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                    Button("Reset") {
+                        randomValues = [0, 0, 0, 0, 0]
+                    }
+                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                 }
-                .buttonStyle(CustomButtonStyle())
             }
         }
     }
@@ -58,6 +72,14 @@ struct ContentView: View {
     
     func rollTheDice() {
         //Roll All Unheld Dice
+        for i in (0..<5) {
+            if(holdValues[i] == "Hold") {
+                chooseRandom(times: 3, i: i)
+                withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                    rotationValues[i] += 360
+                }
+            }
+        }
     }
 }
 
@@ -71,15 +93,19 @@ struct CustomText: View {
 
 // inherited from Pig
 struct CustomButtonStyle: ButtonStyle {
+    let holdValue : String
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 50)
+            .frame(width: 75)
             .font(Font.custom("Marker Felt", size: 24))
             .padding()
-        //if(configuration.label == "Hold"){
+        
+        // goal is to make the background blue if the dice is held, and red if not
+        // nevermind
+        //if(holdValue == "Hold"){
             .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
         //}
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
@@ -93,4 +119,5 @@ struct ContentView_Previews: PreviewProvider {
 /**
  Citations:
  - Leo Lai
+ - For Loops: https://www.programiz.com/swift-programming/for-in-loop
  **/
