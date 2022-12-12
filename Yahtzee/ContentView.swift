@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var randomValue = 0
     @State private var rotationValues = [0.0, 0.0, 0.0, 0.0, 0.0]
     @State private var holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+    @State private var numberOfRolls = 3
     var body: some View {
         ZStack {
             Color.green.opacity(0.7).ignoresSafeArea()
@@ -49,13 +50,21 @@ struct ContentView: View {
                     }
                 }
                 HStack{
-                    Button("Roll") {
-                        rollTheDice()
+                    Button("Roll (\(numberOfRolls))") {
+                        if numberOfRolls > 0 {
+                            rollTheDice()
+                            numberOfRolls -= 1
+                        }
                     }
                     .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     Button("Reset") {
                         randomValues = [0, 0, 0, 0, 0]
+                        numberOfRolls = 3
                     }
+                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                }
+                HStack{
+                    NavigationLink("Help", destination: InstructionsView())
                     .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                 }
             }

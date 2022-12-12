@@ -14,6 +14,7 @@
 		B60D04C529478B300041BDB5 /* YahtzeeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04C429478B300041BDB5 /* YahtzeeTests.swift */; };
 		B60D04CF29478B300041BDB5 /* YahtzeeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04CE29478B300041BDB5 /* YahtzeeUITests.swift */; };
 		B60D04D129478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04D029478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift */; };
+		B60D04DE2947C6A50041BDB5 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B60D04CA29478B300041BDB5 /* YahtzeeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YahtzeeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60D04CE29478B300041BDB5 /* YahtzeeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeUITests.swift; sourceTree = "<group>"; };
 		B60D04D029478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				B60D04B329478B2F0041BDB5 /* YahtzeeApp.swift */,
 				B60D04B529478B2F0041BDB5 /* ContentView.swift */,
+				B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */,
 				B60D04B729478B2F0041BDB5 /* Assets.xcassets */,
 				B60D04B929478B2F0041BDB5 /* Preview Content */,
 			);
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B60D04B629478B2F0041BDB5 /* ContentView.swift in Sources */,
+				B60D04DE2947C6A50041BDB5 /* InstructionsView.swift in Sources */,
 				B60D04B429478B2F0041BDB5 /* YahtzeeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
