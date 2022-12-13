@@ -60,6 +60,7 @@ struct ContentView: View {
                     Button("Reset") {
                         randomValues = [0, 0, 0, 0, 0]
                         numberOfRolls = 3
+                        holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
                     }
                     .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                 }
