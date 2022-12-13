@@ -16,59 +16,61 @@ struct ContentView: View {
     @State private var holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
     @State private var numberOfRolls = 3
     var body: some View {
-        ZStack {
-            Color.green.opacity(0.7).ignoresSafeArea()
-            VStack {
-                CustomText(text: "Yahtzee!")
-                ForEach (0..<5){ i in
-                    HStack {
-                        Image("pips \(randomValues[i])")
-                            .resizable()
-                            .frame(width: 75, height: 75, alignment: .center)
-                            .rotationEffect(.degrees(rotationValues[i]))
-                            .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
-                            .padding()
-                            .onTapGesture {
-                                //contains code that will go in rollTheDice()
-                                //chooseRandom(times: 3, i: i)
-                                //withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
-                                //rotationValues[i] += 360
-                                //}
+        NavigationView {
+            ZStack {
+                Color.green.opacity(0.7).ignoresSafeArea()
+                VStack {
+                    CustomText(text: "Yahtzee!")
+                    ForEach (0..<5){ i in
+                        HStack {
+                            Image("pips \(randomValues[i])")
+                                .resizable()
+                                .frame(width: 75, height: 75, alignment: .center)
+                                .rotationEffect(.degrees(rotationValues[i]))
+                                .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
+                                .padding()
+                                .onTapGesture {
+                                    //contains code that will go in rollTheDice()
+                                    //chooseRandom(times: 3, i: i)
+                                    //withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                                    //rotationValues[i] += 360
+                                    //}
+                                }
+                            
+                            Button(holdValues[i]) {
+                                if(holdValues[i] == "Hold")
+                                {
+                                    holdValues[i] = "'Held'"
+                                }
+                                else if holdValues[i] == "'Held'"
+                                {
+                                    holdValues[i] = "Hold"
+                                }
                             }
-                        
-                        Button(holdValues[i]) {
-                            if(holdValues[i] == "Hold")
-                            {
-                                holdValues[i] = "'Held'"
-                            }
-                            else if holdValues[i] == "'Held'"
-                            {
-                                holdValues[i] = "Hold"
-                            }
-                        }
-                        .buttonStyle(CustomButtonStyle(holdValue: holdValues[i]))
-                    }
-                }
-                HStack{
-                    Button("Roll (\(numberOfRolls))") {
-                        if numberOfRolls > 0 {
-                            rollTheDice()
-                            numberOfRolls -= 1
+                            .buttonStyle(CustomButtonStyle(holdValue: holdValues[i]))
                         }
                     }
-                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                    Button("Reset") {
-                        randomValues = [0, 0, 0, 0, 0]
-                        numberOfRolls = 3
-                        holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+                    HStack{
+                        Button("Roll (\(numberOfRolls))") {
+                            if numberOfRolls > 0 {
+                                rollTheDice()
+                                numberOfRolls -= 1
+                            }
+                        }
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        Button("Reset") {
+                            randomValues = [0, 0, 0, 0, 0]
+                            numberOfRolls = 3
+                            holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+                        }
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
-                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                }
-                HStack{
-                    NavigationLink("Help", destination: InstructionsView())
-                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                    NavigationLink("Scores", destination: ScoreView())
-                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                    HStack{
+                        NavigationLink("Help", destination: InstructionsView())
+                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        NavigationLink("Scores", destination: ScoreView())
+                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                    }
                 }
             }
         }
