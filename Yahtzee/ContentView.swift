@@ -28,13 +28,13 @@ struct ContentView: View {
                             .rotationEffect(.degrees(rotationValues[i]))
                             .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
                             .padding()
-                        .onTapGesture {
-                            //contains code that will go in rollTheDice()
-                            //chooseRandom(times: 3, i: i)
-                            //withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
-                            //rotationValues[i] += 360
-                            //}
-                        }
+                            .onTapGesture {
+                                //contains code that will go in rollTheDice()
+                                //chooseRandom(times: 3, i: i)
+                                //withAnimation(.interpolatingSpring(stiffness: 10, damping: 2)) {
+                                //rotationValues[i] += 360
+                                //}
+                            }
                         
                         Button(holdValues[i]) {
                             if(holdValues[i] == "Hold")
@@ -66,9 +66,9 @@ struct ContentView: View {
                 }
                 HStack{
                     NavigationLink("Help", destination: InstructionsView())
-                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     NavigationLink("Scores", destination: ScoreView())
-                    .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                 }
             }
         }
@@ -107,18 +107,25 @@ struct CustomText: View {
 struct CustomButtonStyle: ButtonStyle {
     let holdValue : String
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .frame(width: 75)
-            .font(Font.custom("Marker Felt", size: 24))
-            .padding()
+        if(holdValue == "Hold"){
+            configuration.label
+                .frame(width: 75)
+                .font(Font.custom("Marker Felt", size: 24))
+                .padding()
+                .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else{
+            configuration.label
+                .frame(width: 75)
+                .font(Font.custom("Marker Felt", size: 24))
+                .padding()
+                .background(.blue).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
         
-        // goal is to make the background blue if the dice is held, and red if not
-        // nevermind
-        //if(holdValue == "Hold"){
-            .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
-        //}
-            .foregroundColor(.black)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
