@@ -40,9 +40,9 @@ struct ContentView: View {
                             Button(holdValues[i]) {
                                 if(holdValues[i] == "Hold")
                                 {
-                                    holdValues[i] = "'Held'"
+                                    holdValues[i] = "Un-Hold"
                                 }
-                                else if holdValues[i] == "'Held'"
+                                else if holdValues[i] == "Un-Hold"
                                 {
                                     holdValues[i] = "Hold"
                                 }
@@ -59,16 +59,14 @@ struct ContentView: View {
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                         Button("Reset") {
-                            randomValues = [0, 0, 0, 0, 0]
-                            numberOfRolls = 3
-                            holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+                            reset()
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                     HStack{
                         NavigationLink("Help", destination: InstructionsView())
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                        NavigationLink("Scores", destination: ScoreView())
+                        NavigationLink("See Score", destination: ScoreView(diceValues: randomValues))
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                 }
@@ -95,6 +93,13 @@ struct ContentView: View {
             }
         }
     }
+    
+    func reset() {
+        //Resets the game
+        randomValues = [0, 0, 0, 0, 0]
+        numberOfRolls = 3
+        holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+    }
 }
 
 // inherited from Pig
@@ -111,7 +116,7 @@ struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         if(holdValue == "Hold"){
             configuration.label
-                .frame(width: 75)
+                .frame(width: 100)
                 .font(Font.custom("Marker Felt", size: 24))
                 .padding()
                 .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
@@ -120,7 +125,7 @@ struct CustomButtonStyle: ButtonStyle {
         }
         else{
             configuration.label
-                .frame(width: 75)
+                .frame(width: 100)
                 .font(Font.custom("Marker Felt", size: 24))
                 .padding()
                 .background(.blue).opacity(configuration.isPressed ? 0.0 : 1.0)
@@ -141,4 +146,7 @@ struct ContentView_Previews: PreviewProvider {
  Citations:
  - Leo Lai
  - For Loops: https://www.programiz.com/swift-programming/for-in-loop
+ - For Loop Error: https://stackoverflow.com/questions/62617491/swiftui-error-closure-containing-control-flow-statement-cannot-be-used-with-fu
+ - Yahtzee Score Card Reference: https://www.papertraildesign.com/wp-content/uploads/2020/12/Yahtzee-Score-Card-single.jpg
+ - Dice Reference: https://www.shutterstock.com/image-vector/dice-icons-set-traditional-die-six-1758258896
  **/
