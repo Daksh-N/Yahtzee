@@ -144,6 +144,32 @@ struct CustomButtonStyle: ButtonStyle {
     }
 }
 
+// also inherited from Pig
+struct SmallCustomButtonStyle: ButtonStyle {
+    let holdValue : String
+    func makeBody(configuration: Configuration) -> some View {
+        if(holdValue == "Hold"){
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 24))
+                .padding()
+                .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else{
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 24))
+                .padding()
+                .background(.blue).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

@@ -11,6 +11,9 @@ struct ScoreView: View {
     let diceValues : [Int]
     //let diceValues = [1, 2, 3, 4, 5]
     @State private var placeholder = "T" // t for test
+    @State private var implementedScores = [0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var buttonStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonus: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
     var body: some View {
         ZStack {
             Color.green.opacity(0.7).ignoresSafeArea()
@@ -39,7 +42,12 @@ struct ScoreView: View {
                     }
                 }
                 VStack {
-                    CustomTextSmall(text: "Stuff will be here")
+                    ForEach (0..<20) { i in
+                        Button(buttonStrings[i]) {
+                            
+                        }
+                        .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
+                    }
                 }
                 .padding(24)
             }
