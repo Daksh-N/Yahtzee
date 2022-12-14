@@ -111,6 +111,14 @@ struct CustomText: View {
 }
 
 // inherited from Pig
+struct CustomTextSmall: View {
+    let text: String
+    var body: some View {
+        Text(text).font(Font.custom("Marker Felt", size: 24))
+    }
+}
+
+// inherited from Pig
 struct CustomButtonStyle: ButtonStyle {
     let holdValue : String
     func makeBody(configuration: Configuration) -> some View {
@@ -149,4 +157,6 @@ struct ContentView_Previews: PreviewProvider {
  - For Loop Error: https://stackoverflow.com/questions/62617491/swiftui-error-closure-containing-control-flow-statement-cannot-be-used-with-fu
  - Yahtzee Score Card Reference: https://www.papertraildesign.com/wp-content/uploads/2020/12/Yahtzee-Score-Card-single.jpg
  - Dice Reference: https://www.shutterstock.com/image-vector/dice-icons-set-traditional-die-six-1758258896
+ - More than 10 views:
+ https://blog.eppz.eu/more-than-10-views-in-swiftui/#:~:text=Every%20SwiftUI%20Group%20is%20limited,List%20%2C%20ForEach%20etc.).
  **/
