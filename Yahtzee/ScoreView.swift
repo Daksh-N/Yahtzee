@@ -11,8 +11,8 @@ struct ScoreView: View {
     let diceValues : [Int]
     //let diceValues = [1, 2, 3, 4, 5]
     @State private var placeholder = "T" // t for test
-    @State private var implementedScores = [0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"]
     var body: some View {
         NavigationView {
             ZStack {
@@ -23,35 +23,78 @@ struct ScoreView: View {
                         NavigationLink("See Score Sheet", destination: SheetView())
                             .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
                     }
-                    Group {
-                        CustomTextSmall(text: "Aces: \(calcDiceNumber(number: 1))")
-                            .padding(3)
-                        CustomTextSmall(text: "Twos: \(calcDiceNumber(number: 2))")
-                            .padding(3)
-                        CustomTextSmall(text: "Threes: \(calcDiceNumber(number: 3))")
-                            .padding(3)
-                        CustomTextSmall(text: "Fours: \(calcDiceNumber(number: 4))")
-                            .padding(3)
-                        CustomTextSmall(text: "Fives: \(calcDiceNumber(number: 5))")
-                            .padding(3)
-                        CustomTextSmall(text: "Sixes: \(calcDiceNumber(number: 6))")
-                            .padding(3)
-                    }
-                    Group {
-                        CustomTextSmall(text: "3 of a kind: \(calc3OfAKind())")
-                            .padding(3)
-                        CustomTextSmall(text: "4 of a kind: \(calc4OfAKind())")
-                            .padding(3)
-                        CustomTextSmall(text: "Full House: \(calcFullHouse())")
-                            .padding(3)
-                        CustomTextSmall(text: "Small Straight: \(calcSmallStraight())")
-                            .padding(3)
-                        CustomTextSmall(text: "Large Straight: \(calcLargeStraight())")
-                            .padding(3)
-                        CustomTextSmall(text: "Yahtzee: \(calcYahtzee())")
-                            .padding(3)
-                        CustomTextSmall(text: "Chance: \(calcChance())")
-                            .padding(3)
+                    HStack {
+                        VStack {
+                            Group {
+                                CustomTextSmall(text: "Aces: \(calcDiceNumber(number: 1))")
+                                    .padding(3)
+                                CustomTextSmall(text: "Twos: \(calcDiceNumber(number: 2))")
+                                    .padding(3)
+                                CustomTextSmall(text: "Threes: \(calcDiceNumber(number: 3))")
+                                    .padding(3)
+                                CustomTextSmall(text: "Fours: \(calcDiceNumber(number: 4))")
+                                    .padding(3)
+                                CustomTextSmall(text: "Fives: \(calcDiceNumber(number: 5))")
+                                    .padding(3)
+                                CustomTextSmall(text: "Sixes: \(calcDiceNumber(number: 6))")
+                                    .padding(3)
+                            }
+                            Group {
+                                CustomTextSmall(text: "3 of a kind: \(calc3OfAKind())")
+                                    .padding(3)
+                                CustomTextSmall(text: "4 of a kind: \(calc4OfAKind())")
+                                    .padding(3)
+                                CustomTextSmall(text: "Full House: \(calcFullHouse())")
+                                    .padding(3)
+                                CustomTextSmall(text: "Small Straight: \(calcSmallStraight())")
+                                    .padding(3)
+                                CustomTextSmall(text: "Large Straight: \(calcLargeStraight())")
+                                    .padding(3)
+                                CustomTextSmall(text: "Yahtzee: \(calcYahtzee())")
+                                    .padding(3)
+                                CustomTextSmall(text: "Chance: \(calcChance())")
+                                    .padding(3)
+                            }
+                        }
+                        VStack {
+                            ForEach (0..<13) { i in
+                                Button("\(buttons[i])") {
+                                    if(buttons[i] == "X")
+                                    {
+                                        buttons[i] = "O"
+                                        let indexToSkip = i
+                                        for j in (0..<13) {
+                                            if j != indexToSkip {
+                                                buttons[j] = "-"
+                                            }
+                                        }
+                                    }
+                                    else if(buttons[i] == "-")
+                                    {
+                                        buttons[i] = "O"
+                                        let indexToSkip = i
+                                        for j in (0..<13) {
+                                            if j != indexToSkip {
+                                                buttons[j] = "-"
+                                            }
+                                        }
+                                    }
+                                    else if(buttons[i] == "O")
+                                    {
+                                        for j in (0..<13) {
+                                            buttons[j] = "X"
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for j in (0..<13) {
+                                            buttons[j] = "ERROR"
+                                        }
+                                    }
+                                }
+                                .buttonStyle(SelectionButtonStyle(selectValue: "\(buttons[i])"))
+                            }
+                        }
                     }
                 }
             }

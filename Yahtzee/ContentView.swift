@@ -160,13 +160,56 @@ struct SmallCustomButtonStyle: ButtonStyle {
         else{
             configuration.label
                 .frame(width: 100)
-                .font(Font.custom("Marker Felt", size: 24))
+                .font(Font.custom("Marker Felt", size: 20))
                 .padding()
                 .background(.blue).opacity(configuration.isPressed ? 0.0 : 1.0)
                 .foregroundColor(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         
+    }
+}
+
+// 100% sure it's inherited from Pig
+struct SelectionButtonStyle: ButtonStyle {
+    let selectValue : String
+    func makeBody(configuration: Configuration) -> some View {
+        if(selectValue == "X"){
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(3)
+                .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else if (selectValue == "O"){
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(3)
+                .background(.green).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else if (selectValue == "-"){
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(3)
+                .background(.gray).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else {
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(3)
+                .background(.yellow).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
     }
 }
 
