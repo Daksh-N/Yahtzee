@@ -16,6 +16,7 @@
 		B60D04D129478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04D029478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift */; };
 		B60D04DE2947C6A50041BDB5 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */; };
 		B60D04E02947F37B0041BDB5 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D04DF2947F37B0041BDB5 /* ScoreView.swift */; };
+		B6D0A934294BA50300C62C71 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0A933294BA50300C62C71 /* SheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		B60D04D029478B300041BDB5 /* YahtzeeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		B60D04DF2947F37B0041BDB5 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
+		B6D0A933294BA50300C62C71 /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				B60D04B329478B2F0041BDB5 /* YahtzeeApp.swift */,
 				B60D04B529478B2F0041BDB5 /* ContentView.swift */,
 				B60D04DF2947F37B0041BDB5 /* ScoreView.swift */,
+				B6D0A933294BA50300C62C71 /* SheetView.swift */,
 				B60D04DD2947C6A50041BDB5 /* InstructionsView.swift */,
 				B60D04B729478B2F0041BDB5 /* Assets.xcassets */,
 				B60D04B929478B2F0041BDB5 /* Preview Content */,
@@ -265,6 +268,7 @@
 			files = (
 				B60D04B629478B2F0041BDB5 /* ContentView.swift in Sources */,
 				B60D04E02947F37B0041BDB5 /* ScoreView.swift in Sources */,
+				B6D0A934294BA50300C62C71 /* SheetView.swift in Sources */,
 				B60D04DE2947C6A50041BDB5 /* InstructionsView.swift in Sources */,
 				B60D04B429478B2F0041BDB5 /* YahtzeeApp.swift in Sources */,
 			);

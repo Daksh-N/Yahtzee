@@ -13,100 +13,54 @@ struct ScoreView: View {
     @State private var placeholder = "T" // t for test
     @State private var implementedScores = [0, 0, 0, 0, 0, 0, 0, 0, 0,
                                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    @State private var buttonStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonus: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
     var body: some View {
-        ZStack {
-            Color.green.opacity(0.7).ignoresSafeArea()
-            VStack {
-                CustomText(text: "Scores:")
-                Spacer()
-            }
-            HStack {
+        NavigationView {
+            ZStack {
+                Color.green.opacity(0.7).ignoresSafeArea()
                 VStack {
                     Group {
-                        CustomTextSmall(text: "Aces: \(calcAces())")
-                        CustomTextSmall(text: "Twos: \(calcTwos())")
-                        CustomTextSmall(text: "Threes: \(calcThrees())")
-                        CustomTextSmall(text: "Fours: \(calcFours())")
-                        CustomTextSmall(text: "Fives: \(calcFives())")
-                        CustomTextSmall(text: "Sixes: \(calcSixes())")
+                        CustomText(text: "Score Possibilities:")
+                        NavigationLink("See Score Sheet", destination: SheetView())
+                            .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
+                    }
+                    Group {
+                        CustomTextSmall(text: "Aces: \(calcDiceNumber(number: 1))")
+                            .padding(3)
+                        CustomTextSmall(text: "Twos: \(calcDiceNumber(number: 2))")
+                            .padding(3)
+                        CustomTextSmall(text: "Threes: \(calcDiceNumber(number: 3))")
+                            .padding(3)
+                        CustomTextSmall(text: "Fours: \(calcDiceNumber(number: 4))")
+                            .padding(3)
+                        CustomTextSmall(text: "Fives: \(calcDiceNumber(number: 5))")
+                            .padding(3)
+                        CustomTextSmall(text: "Sixes: \(calcDiceNumber(number: 6))")
+                            .padding(3)
                     }
                     Group {
                         CustomTextSmall(text: "3 of a kind: \(calc3OfAKind())")
+                            .padding(3)
                         CustomTextSmall(text: "4 of a kind: \(calc4OfAKind())")
+                            .padding(3)
                         CustomTextSmall(text: "Full House: \(calcFullHouse())")
+                            .padding(3)
                         CustomTextSmall(text: "Small Straight: \(calcSmallStraight())")
+                            .padding(3)
                         CustomTextSmall(text: "Large Straight: \(calcLargeStraight())")
+                            .padding(3)
                         CustomTextSmall(text: "Yahtzee: \(calcYahtzee())")
+                            .padding(3)
                         CustomTextSmall(text: "Chance: \(calcChance())")
+                            .padding(3)
                     }
                 }
-                VStack {
-                    ForEach (0..<20) { i in
-                        Button(buttonStrings[i]) {
-                            
-                        }
-                        .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
-                    }
-                }
-                .padding(24)
             }
         }
     }
-    func calcAces() -> Int {
+    func calcDiceNumber(number: Int) -> Int {
         var count = 0
         for i in (0..<5) {
-            if diceValues[i] == 1 {
-                count += diceValues[i]
-            }
-        }
-        return count
-    }
-    
-    func calcTwos() -> Int {
-        var count = 0
-        for i in (0..<5) {
-            if diceValues[i] == 2 {
-                count += diceValues[i]
-            }
-        }
-        return count
-    }
-    
-    func calcThrees() -> Int {
-        var count = 0
-        for i in (0..<5) {
-            if diceValues[i] == 3 {
-                count += diceValues[i]
-            }
-        }
-        return count
-    }
-    
-    func calcFours() -> Int {
-        var count = 0
-        for i in (0..<5) {
-            if diceValues[i] == 4 {
-                count += diceValues[i]
-            }
-        }
-        return count
-    }
-    
-    func calcFives() -> Int {
-        var count = 0
-        for i in (0..<5) {
-            if diceValues[i] == 5 {
-                count += diceValues[i]
-            }
-        }
-        return count
-    }
-    
-    func calcSixes() -> Int {
-        var count = 0
-        for i in (0..<5) {
-            if diceValues[i] == 6 {
+            if diceValues[i] == number {
                 count += diceValues[i]
             }
         }
@@ -115,7 +69,7 @@ struct ScoreView: View {
     
     func totalTopScores() -> Int{
         var topTotal = 0
-        topTotal = calcAces() + calcTwos() + calcThrees() + calcFours() + calcFives() + calcSixes()
+        topTotal = calcDiceNumber(number: 1) + calcDiceNumber(number: 2) + calcDiceNumber(number: 3) + calcDiceNumber(number: 4) + calcDiceNumber(number: 5) + calcDiceNumber(number: 6)
         return topTotal
     }
     

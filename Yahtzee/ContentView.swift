@@ -114,7 +114,7 @@ struct CustomText: View {
 struct CustomTextSmall: View {
     let text: String
     var body: some View {
-        Text(text).font(Font.custom("Marker Felt", size: 24))
+        Text(text).font(Font.custom("Marker Felt", size: 30))
     }
 }
 
@@ -150,8 +150,8 @@ struct SmallCustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         if(holdValue == "Hold"){
             configuration.label
-                .frame(width: 100)
-                .font(Font.custom("Marker Felt", size: 24))
+                .frame(width: 150)
+                .font(Font.custom("Marker Felt", size: 20))
                 .padding()
                 .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
                 .foregroundColor(.black)
