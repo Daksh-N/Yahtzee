@@ -11,10 +11,13 @@ struct ScoreView: View {
     let diceValues : [Int]
     //let diceValues = [1, 2, 3, 4, 5]
     @State private var placeholder = "T" // t for test
-    @State private var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var scores = [0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0]
     @State private var selectedScore = 0
     @State private var selectedScoreIndex = 0
-    @State private var buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"]
+    @State private var buttons = ["X", "X", "X", "X", "X", "X",
+                                  "X", "X", "X", "X", "X", "X", "X",
+                                  "X", "X", "X"]
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,8 +25,10 @@ struct ScoreView: View {
                 VStack {
                     Group {
                         CustomText(text: "Score Possibilities:")
+                        /*
                         NavigationLink("See Score Sheet", destination: SheetView(inheritedScores: scores, selectedScore: selectedScore, selectedScoreIndex: selectedScoreIndex))
                             .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
+                        */
                     }
                     HStack {
                         VStack {
@@ -61,7 +66,7 @@ struct ScoreView: View {
                             }
                         }
                         VStack {
-                            ForEach (0..<14) { i in
+                            ForEach (0..<13) { i in
                                 Button("\(buttons[i])") {
                                     scores[0] = calcDiceNumber(number: 1)
                                     scores[1] = calcDiceNumber(number: 2)
@@ -84,11 +89,12 @@ struct ScoreView: View {
                                         selectedScoreIndex = i
                                         buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
-                                        for j in (0..<14) {
+                                        for j in (0..<13) {
                                             if j != indexToSkip {
                                                 buttons[j] = "-"
                                             }
                                         }
+                                        
                                     }
                                     else if(buttons[i] == "-")
                                     {
@@ -96,7 +102,7 @@ struct ScoreView: View {
                                         selectedScoreIndex = i
                                         buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
-                                        for j in (0..<14) {
+                                        for j in (0..<13) {
                                             if j != indexToSkip {
                                                 buttons[j] = "-"
                                             }
@@ -106,18 +112,55 @@ struct ScoreView: View {
                                     {
                                         selectedScore = 0
                                         selectedScoreIndex = 0
-                                        for j in (0..<14) {
+                                        for j in (0..<13) {
                                             buttons[j] = "X"
                                         }
                                     }
                                     else
                                     {
-                                        for j in (0..<14) {
+                                        for j in (0..<13) {
                                             buttons[j] = "ERROR"
                                         }
                                     }
                                 }
                                 .buttonStyle(SelectionButtonStyle(selectValue: "\(buttons[i])", selectNumber: scores[i]))
+                            }
+                            HStack {
+                                ForEach (13..<16) { i in
+                                    Button("\(buttons[i])") {
+                                        scores[0] = calcDiceNumber(number: 1)
+                                        scores[1] = calcDiceNumber(number: 2)
+                                        scores[2] = calcDiceNumber(number: 3)
+                                        scores[3] = calcDiceNumber(number: 4)
+                                        scores[4] = calcDiceNumber(number: 5)
+                                        scores[5] = calcDiceNumber(number: 6)
+                                        scores[6] = calc3OfAKind()
+                                        scores[7] = calc4OfAKind()
+                                        scores[8] = calcFullHouse()
+                                        scores[9] = calcSmallStraight()
+                                        scores[10] = calcLargeStraight()
+                                        scores[11] = calcYahtzee()
+                                        scores[12] = calcChance()
+                                        scores[13] = calcYahtzeeBonuses()
+                                        
+                                        if(buttons[i] == "X")
+                                        {
+                                            buttons[i] = "V"
+                                            scores[13] += 100
+                                        }
+                                        else if(scores[13] >= 0)
+                                        {
+                                            
+                                        }
+                                        else
+                                        {
+                                            for j in (13..<16) {
+                                                buttons[j] = "ERROR"
+                                            }
+                                        }
+                                    }
+                                    .buttonStyle(OneThirdSelectionButtonStyle(selectValue: "\(buttons[i])", selectNumber: scores[13]))
+                                }
                             }
                         }
                     }

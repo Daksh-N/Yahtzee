@@ -66,8 +66,10 @@ struct ContentView: View {
                     HStack{
                         NavigationLink("Help", destination: InstructionsView())
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        /*
                         NavigationLink("See Score", destination: ScoreView(diceValues: randomValues))
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                         */
                     }
                 }
             }
@@ -216,6 +218,50 @@ struct SelectionButtonStyle: ButtonStyle {
                 .frame(width: 100)
                 .font(Font.custom("Marker Felt", size: 30))
                 .padding(3)
+                .background(.yellow).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+    }
+}
+
+// 100% sure it's inherited from Pig
+struct OneThirdSelectionButtonStyle: ButtonStyle {
+    let selectValue : String
+    let selectNumber : Int
+    func makeBody(configuration: Configuration) -> some View {
+        if(selectValue == "X"){
+            configuration.label
+                .frame(width: 33)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(1.5)
+                .background(.red).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else if (selectValue == "-"){
+            configuration.label
+                .frame(width: 33)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(1.5)
+                .background(.gray).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else if (selectNumber >= 0){
+            configuration.label
+                .frame(width: 33)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(1.5)
+                .background(.green).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else {
+            configuration.label
+                .frame(width: 33)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(1.5)
                 .background(.yellow).opacity(configuration.isPressed ? 0.0 : 1.0)
                 .foregroundColor(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
