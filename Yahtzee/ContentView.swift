@@ -119,6 +119,15 @@ struct CustomTextSmall: View {
 }
 
 // inherited from Pig
+struct CustomTextTiny: View {
+    let text: String
+    var body: some View {
+        Text(text).font(Font.custom("Marker Felt", size: 24))
+    }
+}
+
+
+// inherited from Pig
 struct CustomButtonStyle: ButtonStyle {
     let holdValue : String
     func makeBody(configuration: Configuration) -> some View {
@@ -211,6 +220,19 @@ struct SelectionButtonStyle: ButtonStyle {
                 .foregroundColor(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
+    }
+}
+
+// Super Duper Condfident it's inherited from Pig
+struct SheetButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            //.frame(width: 300)
+            .font(Font.custom("Marker Felt", size: 30))
+            .padding(3)
+            .background(.white).opacity(configuration.isPressed ? 0.0 : 1.0)
+            .foregroundColor(.black)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
