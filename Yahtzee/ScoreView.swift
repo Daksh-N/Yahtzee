@@ -12,6 +12,8 @@ struct ScoreView: View {
     //let diceValues = [1, 2, 3, 4, 5]
     @State private var placeholder = "T" // t for test
     @State private var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var selectedScore = 0
+    @State private var selectedScoreIndex = 0
     @State private var buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"]
     var body: some View {
         NavigationView {
@@ -20,7 +22,7 @@ struct ScoreView: View {
                 VStack {
                     Group {
                         CustomText(text: "Score Possibilities:")
-                        NavigationLink("See Score Sheet", destination: SheetView())
+                        NavigationLink("See Score Sheet", destination: SheetView(inheritedScores: scores, selectedScore: selectedScore, selectedScoreIndex: selectedScoreIndex))
                             .buttonStyle(SmallCustomButtonStyle(holdValue: "Hold"))
                     }
                     HStack {
@@ -59,9 +61,25 @@ struct ScoreView: View {
                         VStack {
                             ForEach (0..<13) { i in
                                 Button("\(buttons[i])") {
+                                    scores[0] = calcDiceNumber(number: 1)
+                                    scores[1] = calcDiceNumber(number: 2)
+                                    scores[2] = calcDiceNumber(number: 3)
+                                    scores[3] = calcDiceNumber(number: 4)
+                                    scores[4] = calcDiceNumber(number: 5)
+                                    scores[5] = calcDiceNumber(number: 6)
+                                    scores[6] = calc3OfAKind()
+                                    scores[7] = calc4OfAKind()
+                                    scores[8] = calcFullHouse()
+                                    scores[9] = calcSmallStraight()
+                                    scores[10] = calcLargeStraight()
+                                    scores[11] = calcYahtzee()
+                                    scores[12] = calcChance()
+                                    
                                     if(buttons[i] == "X")
                                     {
-                                        buttons[i] = "O"
+                                        selectedScore = scores[i]
+                                        selectedScoreIndex = i
+                                        buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
                                         for j in (0..<13) {
                                             if j != indexToSkip {
@@ -71,7 +89,9 @@ struct ScoreView: View {
                                     }
                                     else if(buttons[i] == "-")
                                     {
-                                        buttons[i] = "O"
+                                        selectedScore = scores[i]
+                                        selectedScoreIndex = i
+                                        buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
                                         for j in (0..<13) {
                                             if j != indexToSkip {
@@ -79,8 +99,10 @@ struct ScoreView: View {
                                             }
                                         }
                                     }
-                                    else if(buttons[i] == "O")
+                                    else if(scores[i] >= 0)
                                     {
+                                        selectedScore = 0
+                                        selectedScoreIndex = 0
                                         for j in (0..<13) {
                                             buttons[j] = "X"
                                         }
@@ -92,7 +114,7 @@ struct ScoreView: View {
                                         }
                                     }
                                 }
-                                .buttonStyle(SelectionButtonStyle(selectValue: "\(buttons[i])"))
+                                .buttonStyle(SelectionButtonStyle(selectValue: "\(buttons[i])", selectNumber: scores[i]))
                             }
                         }
                     }
@@ -108,29 +130,6 @@ struct ScoreView: View {
             }
         }
         return count
-    }
-    
-    func totalTopScores() -> Int{
-        var topTotal = 0
-        topTotal = calcDiceNumber(number: 1) + calcDiceNumber(number: 2) + calcDiceNumber(number: 3) + calcDiceNumber(number: 4) + calcDiceNumber(number: 5) + calcDiceNumber(number: 6)
-        return topTotal
-    }
-    
-    func calcTopBonus() -> Int {
-        let topTotal = totalTopScores()
-        var topBonus = 0
-        if (topTotal >= 63) {
-            topBonus = 35
-        }
-        else {
-            topBonus = 0
-        }
-        return topBonus
-    }
-    
-    func calcTopTrueTotal() -> Int {
-        let topTrueTotal = totalTopScores() + calcTopBonus()
-        return topTrueTotal
     }
     
     func calc3OfAKind() -> Int {

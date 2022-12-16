@@ -173,6 +173,7 @@ struct SmallCustomButtonStyle: ButtonStyle {
 // 100% sure it's inherited from Pig
 struct SelectionButtonStyle: ButtonStyle {
     let selectValue : String
+    let selectNumber : Int
     func makeBody(configuration: Configuration) -> some View {
         if(selectValue == "X"){
             configuration.label
@@ -183,21 +184,21 @@ struct SelectionButtonStyle: ButtonStyle {
                 .foregroundColor(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-        else if (selectValue == "O"){
-            configuration.label
-                .frame(width: 100)
-                .font(Font.custom("Marker Felt", size: 30))
-                .padding(3)
-                .background(.green).opacity(configuration.isPressed ? 0.0 : 1.0)
-                .foregroundColor(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-        }
         else if (selectValue == "-"){
             configuration.label
                 .frame(width: 100)
                 .font(Font.custom("Marker Felt", size: 30))
                 .padding(3)
                 .background(.gray).opacity(configuration.isPressed ? 0.0 : 1.0)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        else if (selectNumber >= 0){
+            configuration.label
+                .frame(width: 100)
+                .font(Font.custom("Marker Felt", size: 30))
+                .padding(3)
+                .background(.green).opacity(configuration.isPressed ? 0.0 : 1.0)
                 .foregroundColor(.black)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
