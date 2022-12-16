@@ -274,9 +274,9 @@ struct ScoreView: View {
         }
         for i in (0..<6) {
             if i == indexToSkip {
-                break
+                //do nothing
             }
-            if amountOfDice[i] >= 2 {
+            else if amountOfDice[i] >= 2 {
                 duoExists = true
                 break
             }
