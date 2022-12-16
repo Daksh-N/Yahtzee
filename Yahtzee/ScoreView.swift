@@ -11,10 +11,10 @@ struct ScoreView: View {
     let diceValues : [Int]
     //let diceValues = [1, 2, 3, 4, 5]
     @State private var placeholder = "T" // t for test
-    @State private var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     @State private var selectedScore = 0
     @State private var selectedScoreIndex = 0
-    @State private var buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"]
+    @State private var buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"]
     var body: some View {
         NavigationView {
             ZStack {
@@ -56,10 +56,12 @@ struct ScoreView: View {
                                     .padding(3)
                                 CustomTextSmall(text: "Chance: \(calcChance())")
                                     .padding(3)
+                                CustomTextSmall(text: "Yahtzee Bonuses: \(calcYahtzeeBonuses())")
+                                    .padding(3)
                             }
                         }
                         VStack {
-                            ForEach (0..<13) { i in
+                            ForEach (0..<14) { i in
                                 Button("\(buttons[i])") {
                                     scores[0] = calcDiceNumber(number: 1)
                                     scores[1] = calcDiceNumber(number: 2)
@@ -74,6 +76,7 @@ struct ScoreView: View {
                                     scores[10] = calcLargeStraight()
                                     scores[11] = calcYahtzee()
                                     scores[12] = calcChance()
+                                    scores[13] = calcYahtzeeBonuses()
                                     
                                     if(buttons[i] == "X")
                                     {
@@ -81,7 +84,7 @@ struct ScoreView: View {
                                         selectedScoreIndex = i
                                         buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
-                                        for j in (0..<13) {
+                                        for j in (0..<14) {
                                             if j != indexToSkip {
                                                 buttons[j] = "-"
                                             }
@@ -93,7 +96,7 @@ struct ScoreView: View {
                                         selectedScoreIndex = i
                                         buttons[i] = "\(scores[i])"
                                         let indexToSkip = i
-                                        for j in (0..<13) {
+                                        for j in (0..<14) {
                                             if j != indexToSkip {
                                                 buttons[j] = "-"
                                             }
@@ -103,13 +106,13 @@ struct ScoreView: View {
                                     {
                                         selectedScore = 0
                                         selectedScoreIndex = 0
-                                        for j in (0..<13) {
+                                        for j in (0..<14) {
                                             buttons[j] = "X"
                                         }
                                     }
                                     else
                                     {
-                                        for j in (0..<13) {
+                                        for j in (0..<14) {
                                             buttons[j] = "ERROR"
                                         }
                                     }
@@ -418,6 +421,10 @@ struct ScoreView: View {
             chance += diceValues[i]
         }
         return chance
+    }
+    
+    func calcYahtzeeBonuses() -> Int {
+        return -1
     }
 }
 

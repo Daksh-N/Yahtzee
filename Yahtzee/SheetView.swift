@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SheetView: View {
-    @State private var displayStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonus: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
+    @State private var displayStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonuses: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
     @State private var implementedScores = [0, 0, 0, 0, 0, 0,
-                                            0, 0, 0, 0, 0, 0, 0]
-    @State private var scoreDisplays = ["1", "2", "3", "4", "5", "6",
-                                        "7", "8", "9", "10", "11", "12", "13"]
+                                            0, 0, 0, 0, 0, 0, 0, 0]
+    @State private var scoreDisplays = ["-", "-", "-", "-", "-", "-",
+                                        "-", "-", "-", "-", "-", "-", "-", "-"]
     // "slots" 7, 8, 9, 17, 18, 19, 20 are all non-player scores
     @State private var permittedLogs = 1
     @State private var writeButtonDisplay = "Write Score"
@@ -35,18 +35,16 @@ struct SheetView: View {
                             CustomTextTiny(text: scoreDisplays[i])
                                 .padding(1)
                         }
-                        CustomTextTiny(text: "-")
+                        CustomTextTiny(text: "\(calcTopTotal())")
                             .padding(1)
-                        CustomTextTiny(text: "-")
+                        CustomTextTiny(text: "\(calcTopBonus())")
                             .padding(1)
-                        CustomTextTiny(text: "-")
+                        CustomTextTiny(text: "\(calcTrueTopTotal())")
                             .padding(1)
-                        ForEach (6..<13) { i in
+                        ForEach (6..<14) { i in
                             CustomTextTiny(text: scoreDisplays[i])
                                 .padding(1)
                         }
-                        CustomTextTiny(text: "-")
-                            .padding(1)
                         CustomTextTiny(text: "-")
                             .padding(1)
                         CustomTextTiny(text: "-")
@@ -71,6 +69,29 @@ struct SheetView: View {
             }
         }
     }
+    func calcTopTotal() -> Int {
+        var sum = 0
+        for i in (0..<6) {
+            sum += implementedScores[i]
+        }
+        return sum
+    }
+    
+    func calcTopBonus() -> Int {
+        if calcTopTotal() >= 63
+        {
+            return 35
+        }
+        else
+        {
+            return 0
+        }
+    }
+    
+    func calcTrueTopTotal() -> Int {
+        return calcTopTotal() + calcTopBonus()
+    }
+    
 }
 
 struct SheetView_Previews: PreviewProvider {
