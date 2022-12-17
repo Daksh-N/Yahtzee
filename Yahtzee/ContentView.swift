@@ -8,13 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var scores = []
+    // These are the dice values
     @State private var randomValues = [0, 0, 0, 0, 0]
-    @State private var heldDice = [false, false, false, false, false]
-    @State private var randomValue = 0
+    // These are the dice animation values
     @State private var rotationValues = [0.0, 0.0, 0.0, 0.0, 0.0]
+    // These are the values that tell if a dice is being holded or not
     @State private var holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+    // This is the number of rolls left- self explanatory
     @State private var numberOfRolls = 3
+    // These are the Scores that the player earns, not the scores calculated from what the player earns
+    @State private var scores = [0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0]
+    // When the player writes a score, this variable holds the value
+    @State private var selectedScore = 0
+    // Since the scores are in an array, we also need the index
+    @State private var selectedScoreIndex = 0
+    // I plan on iterating through a for-loop for the score-sheet, so here's the types of scores as strings on an array
+    @State private var displayStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonuses: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
+    // Along with the variable above "displayStrings"- I will obviously needs to have the actual scores next to them, so here they are in Integer-Array Form
+    @State private var scoreDisplays = ["-", "-", "-", "-", "-", "-",
+                                        "-", "-", "-", "-", "-", "-", "-", "-"]
+    
+    // View
     var body: some View {
         NavigationView {
             ZStack {

@@ -10,7 +10,6 @@ import SwiftUI
 struct ScoreView: View {
     let diceValues : [Int]
     //let diceValues = [1, 2, 3, 4, 5]
-    @State private var placeholder = "T" // t for test
     @State private var scores = [0, 0, 0, 0, 0, 0,
                                  0, 0, 0, 0, 0, 0, 0, 0]
     @State private var selectedScore = 0
