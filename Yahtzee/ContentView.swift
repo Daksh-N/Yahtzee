@@ -123,6 +123,7 @@ struct ContentView: View {
                                 selectedScoreIndex = calcIndexBasedOnScore()
                                 scores[selectedScoreIndex] = selectedScore
                                 numberOfTurns -= 1
+                                reset()
                             }
                             else if(calcIndexBasedOnScore() == 13 && (scores[13] == -1 || scores[13] == 100 || scores[13] == 200))
                             {
@@ -134,8 +135,8 @@ struct ContentView: View {
                                 {
                                     scores[13] += 100
                                 }
+                                reset()
                             }
-                            reset()
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }

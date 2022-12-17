@@ -12,7 +12,8 @@ struct InstructionsView: View {
         ZStack {
             Color.green.opacity(0.7).ignoresSafeArea()
             VStack {
-                CustomText(text: "Instructions")
+                CustomTextTiny(text: "Yahtzee is a simple but complicated game involving 5 dice, here's how to play it:")
+                    .padding(25)
             }
         }
     }
