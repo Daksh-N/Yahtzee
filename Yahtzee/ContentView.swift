@@ -56,9 +56,9 @@ struct ContentView: View {
                 Color.green.opacity(0.7).ignoresSafeArea()
                 VStack {
                     Text("")
-                        .padding(25)
+                        .padding(1)
                     CustomText(text: "Yahtzee!")
-                    CustomTextSmall(text: "\(numberOfTurns) Turns Left")
+                    CustomTextTiny(text: "\(numberOfTurns) Turns Left")
                     ForEach (0..<5){ i in
                         HStack {
                             Image("pips \(diceValues[i])")
@@ -66,7 +66,7 @@ struct ContentView: View {
                                 .frame(width: 75, height: 75, alignment: .center)
                                 .rotationEffect(.degrees(rotationValues[i]))
                                 .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
-                                .padding(10)
+                                .padding(7)
                                 .onTapGesture {
                                     //contains code that will go in rollTheDice()
                                     //chooseRandom(times: 3, i: i)
@@ -108,7 +108,6 @@ struct ContentView: View {
                             Text("Yahtzee Bonus: \(calcYahtzeeBonuses())").tag(calcYahtzeeBonuses())
                         }
                     }
-                    Spacer()
                     HStack{
                         Button("Roll (\(numberOfRolls))") {
                             if numberOfRolls > 0 {
