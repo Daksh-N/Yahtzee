@@ -27,7 +27,7 @@ struct InstructionsView: View {
                         .padding(1)
                     Text("Full House: You have a pair (2 of a kind) and 3 of a kind both, that of seperate numbers, but instead of the dice being totaled, you just score 25 points no matter what")
                         .padding(1)
-                    NavigationLink("Next Page", destination: InstructionsView2())
+                    NavigationLink("Next Page", destination: InstructionsContinuedView())
                         .padding(18)
                 }
                 .padding()
