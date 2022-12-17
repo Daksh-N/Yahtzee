@@ -17,20 +17,20 @@ struct ContentView: View {
     // This is the number of rolls left- self explanatory
     @State private var numberOfRolls = 3
     // These are the Scores that the player earns, not the scores calculated from what the player earns
-    @State private var scores = [0, // i=0 | Aces
-                                 0, // i=1 | Twos
-                                 0, // i=2 | Threes
-                                 0, // i=3 | Fours
-                                 0, // i=4 | Fives
-                                 0, // i=5 | Sixes
-                                 0, // i=6 | 3 of a kind
-                                 0, // i=7 | 4 of a kind
-                                 0, // i=8 | Full House
-                                 0, // i=9 | Small Straight
-                                 0, // i=10 | Large Straight
-                                 0, // i=11 | Yahtzee
-                                 0, // i=12 | Chance
-                                 0] // i=13 | Yahtzee Bonuses
+    @State private var scores = [-1, // i=0 | Aces
+                                 -1, // i=1 | Twos
+                                 -1, // i=2 | Threes
+                                 -1, // i=3 | Fours
+                                 -1, // i=4 | Fives
+                                 -1, // i=5 | Sixes
+                                 -1, // i=6 | 3 of a kind
+                                 -1, // i=7 | 4 of a kind
+                                 -1, // i=8 | Full House
+                                 -1, // i=9 | Small Straight
+                                 -1, // i=10 | Large Straight
+                                 -1, // i=11 | Yahtzee
+                                 -1, // i=12 | Chance
+                                 -1] // i=13 | Yahtzee Bonuses
     // When the player writes a score, this variable holds the value
     @State private var selectedScore = 0
     // Since the scores are in an array, we also need the index
@@ -40,6 +40,14 @@ struct ContentView: View {
     // Along with the variable above "displayStrings"- I will obviously needs to have the actual scores next to them, so here they are in Integer-Array Form
     @State private var scoreDisplays = ["-", "-", "-", "-", "-", "-",
                                         "-", "-", "-", "-", "-", "-", "-", "-"]
+    // A counter to keep track of how many Yahtzee Bonuses you have
+    @State private var amountOfYahtzeeBonuses = 0
+    
+    // Number of turns you have left
+    @State private var numberOfTurns = 13
+    
+    // In the name
+    @State private var testBoolean = false
     
     // View
     var body: some View {
@@ -47,7 +55,10 @@ struct ContentView: View {
             ZStack {
                 Color.green.opacity(0.7).ignoresSafeArea()
                 VStack {
+                    Text("")
+                        .padding(25)
                     CustomText(text: "Yahtzee!")
+                    CustomTextSmall(text: "\(numberOfTurns) Turns Left")
                     ForEach (0..<5){ i in
                         HStack {
                             Image("pips \(diceValues[i])")
@@ -55,7 +66,7 @@ struct ContentView: View {
                                 .frame(width: 75, height: 75, alignment: .center)
                                 .rotationEffect(.degrees(rotationValues[i]))
                                 .rotation3DEffect(.degrees(rotationValues[i]), axis: (x: 1, y: 1, z: 1))
-                                .padding()
+                                .padding(10)
                                 .onTapGesture {
                                     //contains code that will go in rollTheDice()
                                     //chooseRandom(times: 3, i: i)
@@ -77,9 +88,27 @@ struct ContentView: View {
                             .buttonStyle(CustomButtonStyle(holdValue: holdValues[i]))
                         }
                     }
-                    
-                    
-                    
+                    Picker("Select Score Method", selection: $selectedScore) {
+                        Group {
+                            Text("Aces: \(calcDiceNumber(number:1))").tag(calcDiceNumber(number: 1))
+                            Text("Twos: \(calcDiceNumber(number:2))").tag(calcDiceNumber(number: 2))
+                            Text("Threes: \(calcDiceNumber(number:3))").tag(calcDiceNumber(number: 3))
+                            Text("Fours: \(calcDiceNumber(number:4))").tag(calcDiceNumber(number: 4))
+                            Text("Fives: \(calcDiceNumber(number:5))").tag(calcDiceNumber(number: 5))
+                            Text("Sixes: \(calcDiceNumber(number:6))").tag(calcDiceNumber(number: 6))
+                        }
+                        Group {
+                            Text("3 of a kind: \(calc3OfAKind())").tag(calc3OfAKind())
+                            Text("4 of a kind: \(calc4OfAKind())").tag(calc4OfAKind())
+                            Text("Full House: \(calcFullHouse())").tag(calcFullHouse())
+                            Text("Small Straight: \(calcSmallStraight())").tag(calcSmallStraight())
+                            Text("Large Straight: \(calcLargeStraight())").tag(calcLargeStraight())
+                            Text("Yahtzee: \(calcYahtzee())").tag(calcYahtzee())
+                            Text("Chance: \(calcChance())").tag(calcChance())
+                            Text("Yahtzee Bonus: \(calcYahtzeeBonuses())").tag(calcYahtzeeBonuses())
+                        }
+                    }
+                    Spacer()
                     HStack{
                         Button("Roll (\(numberOfRolls))") {
                             if numberOfRolls > 0 {
@@ -88,7 +117,25 @@ struct ContentView: View {
                             }
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                        Button("Reset") {
+                        Button("Put Score")
+                        {
+                            if(scores[calcIndexBasedOnScore()] < 0 && calcIndexBasedOnScore() != 13)
+                            {
+                                selectedScoreIndex = calcIndexBasedOnScore()
+                                scores[selectedScoreIndex] = selectedScore
+                                numberOfTurns -= 1
+                            }
+                            else if(calcIndexBasedOnScore() == 13 && (scores[13] == -1 || scores[13] == 100 || scores[13] == 200))
+                            {
+                                if(scores[13] == -1)
+                                {
+                                    scores[13] += 101
+                                }
+                                else
+                                {
+                                    scores[13] += 100
+                                }
+                            }
                             reset()
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
@@ -96,10 +143,18 @@ struct ContentView: View {
                     HStack{
                         NavigationLink("Help", destination: InstructionsView())
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        Button("Reset") {
+                            resetGame()
+                        }
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                         /*
-                        NavigationLink("See Score", destination: ScoreView(diceValues: randomValues))
-                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                         NavigationLink("See Score", destination: ScoreView(diceValues: randomValues))
+                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                          */
+                    }
+                    HStack{
+                        NavigationLink("See Score", destination: SheetView(implementedScores: scores))
+                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                 }
             }
@@ -112,6 +167,24 @@ struct ContentView: View {
                 chooseRandom(times: times - 1, i: i)
             }
         }
+    }
+    
+    func calcIndexBasedOnScore() -> Int {
+        if selectedScore == calcDiceNumber(number: 1) {return 0}
+        if selectedScore == calcDiceNumber(number: 2) {return 1}
+        if selectedScore == calcDiceNumber(number: 3) {return 2}
+        if selectedScore == calcDiceNumber(number: 4) {return 3}
+        if selectedScore == calcDiceNumber(number: 5) {return 4}
+        if selectedScore == calcDiceNumber(number: 6) {return 5}
+        if selectedScore == calc3OfAKind() {return 6}
+        if selectedScore == calc4OfAKind() {return 7}
+        if selectedScore == calcFullHouse() {return 8}
+        if selectedScore == calcSmallStraight() {return 9}
+        if selectedScore == calcLargeStraight() {return 10}
+        if selectedScore == calcYahtzee() {return 11}
+        if selectedScore == calcChance() {return 12}
+        if selectedScore == calcYahtzeeBonuses() {return 13}
+        return -1
     }
     
     func rollTheDice() {
@@ -127,10 +200,21 @@ struct ContentView: View {
     }
     
     func reset() {
-        //Resets the game
+        //Resets for the next turn
         diceValues = [0, 0, 0, 0, 0]
         numberOfRolls = 3
         holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+    }
+    
+    func resetGame() {
+        //Resets the actual game
+        diceValues = [0, 0, 0, 0, 0]
+        numberOfRolls = 3
+        holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+        for i in (0..<14) {
+            scores[i] = -1
+        }
+        numberOfTurns = 13
     }
     
     func runCalculations() {
@@ -449,7 +533,11 @@ struct ContentView: View {
     }
     
     func calcYahtzeeBonuses() -> Int {
-        return -1
+        if(calcYahtzee() == 50 && scores[11] == 50)
+        {
+            return 100
+        }
+        return 0
     }
 }
 
@@ -622,7 +710,7 @@ struct OneThirdSelectionButtonStyle: ButtonStyle {
 struct SheetButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            //.frame(width: 300)
+        //.frame(width: 300)
             .font(Font.custom("Marker Felt", size: 30))
             .padding(3)
             .background(.white).opacity(configuration.isPressed ? 0.0 : 1.0)

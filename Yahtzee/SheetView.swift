@@ -9,20 +9,13 @@ import SwiftUI
 
 struct SheetView: View {
     @State private var displayStrings = ["Aces: ", "Twos: ", "Threes: ", "Fours: ", "Fives: ", "Sixes: ", "Total Score: ", "Bonus: ", "Top Total: ", "3 of a kind: ", "4 of a kind: ", "Full House: ", "Small Straight: ", "Large Straight: ", "Yahtzee: ", "Chance: ", "Yahtzee Bonuses: ", "Bottom Total: ", "Top Total: ", "Grand Total: "]
-    @State private var implementedScores = [0, 0, 0, 0, 0, 0,
-                                            0, 0, 0, 0, 0, 0, 0, 0]
-    @State private var scoreDisplays = ["-", "-", "-", "-", "-", "-",
-                                        "-", "-", "-", "-", "-", "-", "-", "-"]
-    // "slots" 7, 8, 9, 17, 18, 19, 20 are all non-player scores
-    @State private var permittedLogs = 1
-    @State private var writeButtonDisplay = "Write Score"
-    let inheritedScores : [Int]
-    let selectedScore : Int
-    let selectedScoreIndex : Int
+    @State var implementedScores : [Int]
     var body: some View {
         ZStack {
             Color.green.opacity(0.7).ignoresSafeArea()
             VStack {
+                CustomTextSmall(text: "Score Sheet:")
+                    //.padding()
                 HStack {
                     VStack {
                         ForEach (0..<20) { i in
@@ -32,41 +25,29 @@ struct SheetView: View {
                     }
                     VStack {
                         ForEach (0..<6) { i in
-                            CustomTextTiny(text: scoreDisplays[i])
-                                .padding(1)
+                            CustomTextTiny(text: "\(implementedScores[i])")
                         }
+                        .padding(1)
                         CustomTextTiny(text: "\(calcTopTotal())")
                             .padding(1)
                         CustomTextTiny(text: "\(calcTopBonus())")
                             .padding(1)
                         CustomTextTiny(text: "\(calcTrueTopTotal())")
                             .padding(1)
-                        ForEach (6..<14) { i in
-                            CustomTextTiny(text: scoreDisplays[i])
-                                .padding(1)
+                        ForEach(6..<14) { i in
+                            CustomTextTiny(text: "\(implementedScores[i])")
                         }
-                        CustomTextTiny(text: "-")
+                        .padding(1)
+                        CustomTextTiny(text: "\(calcBottomTotal())")
                             .padding(1)
-                        CustomTextTiny(text: "-")
+                        CustomTextTiny(text: "\(calcTrueTopTotal())")
                             .padding(1)
-                        CustomTextTiny(text: "-")
+                        CustomTextTiny(text: "\(calcGrandTotal())")
                             .padding(1)
                     }
                 }
-                Button(writeButtonDisplay + " (\(selectedScore))")
-                {
-                    if permittedLogs > 0 {
-                        scoreDisplays[selectedScoreIndex] = "\(selectedScore)"
-                        implementedScores[selectedScoreIndex] = selectedScore
-                        permittedLogs -= 1
-                    }
-                    if permittedLogs <= 0 {
-                        // do stuff
-                        writeButtonDisplay = "Score Already Written"
-                    }
-                }
-                .buttonStyle(SheetButtonStyle())
             }
+            Spacer()
         }
     }
     func calcTopTotal() -> Int {
@@ -92,10 +73,22 @@ struct SheetView: View {
         return calcTopTotal() + calcTopBonus()
     }
     
+    func calcBottomTotal() -> Int {
+        var sum = 0
+        for i in (6..<14) {
+            sum += implementedScores[i]
+        }
+        return sum
+    }
+    
+    func calcGrandTotal() -> Int {
+        return calcTrueTopTotal() + calcBottomTotal()
+    }
 }
 
 struct SheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SheetView(inheritedScores: [0], selectedScore: 0, selectedScoreIndex: 0)
+        SheetView(implementedScores: [-1, -1, -1, -1, -1, -1,
+                                       -1, -1, -1, -1, -1, -1, -1, -1])
     }
 }

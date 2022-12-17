@@ -5,6 +5,9 @@
 //  Created by Daksh Nakra on 12/12/22.
 //
 
+// THIS VIEW IS BEING DISCARDED
+// I made this view for selecting scores, but due to an error, I couldn't really get it to work optimally, so I had to end up discarding this view and not using it entirely, however, it will be here to stay in case anyone wants to dig into the code :>
+
 import SwiftUI
 
 struct ScoreView: View {
