@@ -122,7 +122,7 @@ struct ContentView: View {
                             {
                                 selectedScoreIndex = calcIndexBasedOnScore()
                                 scores[selectedScoreIndex] = selectedScore
-                                numberOfTurns -= 1
+                                removeTurn()
                                 reset()
                             }
                             else if(calcIndexBasedOnScore() == 13 && (scores[13] == -1 || scores[13] == 100 || scores[13] == 200))
@@ -142,7 +142,7 @@ struct ContentView: View {
                     }
                     HStack{
                         Button("Omit Turn") {
-                            numberOfTurns -= 1
+                            removeTurn()
                             reset()
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
@@ -205,6 +205,17 @@ struct ContentView: View {
         diceValues = [0, 0, 0, 0, 0]
         numberOfRolls = 3
         holdValues = ["Hold", "Hold", "Hold", "Hold", "Hold"]
+    }
+    
+    func removeTurn() {
+        if(numberOfTurns > 0)
+        {
+            numberOfTurns -= 1
+        }
+        else
+        {
+            resetGame()
+        }
     }
     
     func resetGame() {
