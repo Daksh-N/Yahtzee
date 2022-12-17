@@ -18,19 +18,19 @@ struct ContentView: View {
     @State private var numberOfRolls = 3
     // These are the Scores that the player earns, not the scores calculated from what the player earns
     @State private var scores = [-1, // i=0 | Aces
-                                 -1, // i=1 | Twos
-                                 -1, // i=2 | Threes
-                                 -1, // i=3 | Fours
-                                 -1, // i=4 | Fives
-                                 -1, // i=5 | Sixes
-                                 -1, // i=6 | 3 of a kind
-                                 -1, // i=7 | 4 of a kind
-                                 -1, // i=8 | Full House
-                                 -1, // i=9 | Small Straight
-                                 -1, // i=10 | Large Straight
-                                 -1, // i=11 | Yahtzee
-                                 -1, // i=12 | Chance
-                                 -1] // i=13 | Yahtzee Bonuses
+                                  -1, // i=1 | Twos
+                                  -1, // i=2 | Threes
+                                  -1, // i=3 | Fours
+                                  -1, // i=4 | Fives
+                                  -1, // i=5 | Sixes
+                                  -1, // i=6 | 3 of a kind
+                                  -1, // i=7 | 4 of a kind
+                                  -1, // i=8 | Full House
+                                  -1, // i=9 | Small Straight
+                                  -1, // i=10 | Large Straight
+                                  -1, // i=11 | Yahtzee
+                                  -1, // i=12 | Chance
+                                  -1] // i=13 | Yahtzee Bonuses
     // When the player writes a score, this variable holds the value
     @State private var selectedScore = 0
     // Since the scores are in an array, we also need the index
@@ -141,20 +141,21 @@ struct ContentView: View {
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                     HStack{
+                        Button("Omit Turn") {
+                            numberOfTurns -= 1
+                            reset()
+                        }
+                        .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                        NavigationLink("See Score", destination: SheetView(implementedScores: scores))
+                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
+                    }
+                    HStack{
                         NavigationLink("Help", destination: InstructionsView())
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                         Button("Reset") {
                             resetGame()
                         }
                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                        /*
-                         NavigationLink("See Score", destination: ScoreView(diceValues: randomValues))
-                         .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
-                         */
-                    }
-                    HStack{
-                        NavigationLink("See Score", destination: SheetView(implementedScores: scores))
-                            .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                 }
             }
