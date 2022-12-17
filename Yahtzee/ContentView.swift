@@ -150,7 +150,7 @@ struct ContentView: View {
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                     }
                     HStack{
-                        NavigationLink("Help", destination: InstructionsView())
+                        NavigationLink("Rules", destination: InstructionsView())
                             .buttonStyle(CustomButtonStyle(holdValue: "Hold"))
                         Button("Reset") {
                             resetGame()
